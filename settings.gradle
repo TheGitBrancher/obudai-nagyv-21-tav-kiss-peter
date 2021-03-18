@@ -1,0 +1,6 @@
+rootProject.name = 'cookbook'
+
+include ':cookbook-app',
+        ':cookbook-domain',
+        ':cookbook-persistence',
+        ':cookbook-service'
