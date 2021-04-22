@@ -27,4 +27,14 @@ public interface IService {
     Cook getCurrentUser();
 
     void deleteRecipe(String input);
+
+    User getCurrentlyLoggedIn();
+
+    void setCurrentlyLoggedIn(User currentlyLoggedIn);
+
+    void saveData();
+
+    void loadData();
+
+    Long getRecipeId();
 }

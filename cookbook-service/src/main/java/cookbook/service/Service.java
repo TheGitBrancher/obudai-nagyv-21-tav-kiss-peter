@@ -44,7 +44,7 @@ public class Service implements IService {
     @Override
     public void saveComment(Recipe recipe, String input) {
         Comment comment = new Comment();
-        comment.setId((long) data.getComments().size() + 1);
+        comment.setId(getCommentId());
         comment.setRecipeId(recipe.getId());
         comment.setOwner(getCurrentUser());
         comment.setTimestamp(LocalDateTime.now());
@@ -77,25 +77,40 @@ public class Service implements IService {
     public void deleteRecipe(String input) {
         Recipe recipeToDelete = data.getRecipes().stream().filter(y -> y.getId().equals(Long.parseLong(input))).findAny().get();
         data.getRecipes().remove(recipeToDelete);
-        List<Comment> commentsToDelete = data.getComments().stream().filter(y->y.getId().equals(recipeToDelete.getId())).collect(Collectors.toList());
+        List<Comment> commentsToDelete = data.getComments().stream().filter(y->y.getRecipeId().equals(recipeToDelete.getId())).collect(Collectors.toList());
         data.getComments().removeAll(commentsToDelete);
         getCurrentUser().getOwnRecipes().remove(recipeToDelete);
     }
 
+    @Override
     public User getCurrentlyLoggedIn() {
         return currentlyLoggedIn;
     }
 
+    @Override
     public void setCurrentlyLoggedIn(User currentlyLoggedIn) {
         this.currentlyLoggedIn = currentlyLoggedIn;
     }
 
+    @Override
     public void saveData() {
         data.saveCurrentRecipes();
         data.saveCurrentComments();
     }
 
+    @Override
     public void loadData() {
         data.loadData();
+    }
+
+    @Override
+    public Long getRecipeId() {
+        int lastIndex = data.getRecipes().size() - 1;
+        return data.getRecipes().get(lastIndex).getId() + 1;
+    }
+
+    private Long getCommentId() {
+        int lastIndex = data.getComments().size() - 1;
+        return data.getComments().get(lastIndex).getId() + 1;
     }
 }

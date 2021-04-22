@@ -35,6 +35,8 @@ public class View implements IView{
         String prep = getInput();
         if (!prep.equalsIgnoreCase("c")) {
             recipe.setPreparation(prep + "\n");
+        } else {
+            recipe.setPreparation("\n");
         }
 
         System.out.println("How would you categorize this dish? (type 'C' to continue)");

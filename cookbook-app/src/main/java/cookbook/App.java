@@ -63,8 +63,13 @@ public class App {
         String input = view.getInput();
         switch (input){
             case "1":
-                addRecipe();
-                homeScreen();
+                try {
+                    addRecipe();
+                } catch (Exception e) {
+                    view.printInvalidInput();
+                } finally {
+                    homeScreen();
+                }
                 break;
             case "2":
                 listRecipes();
@@ -85,7 +90,7 @@ public class App {
 
     private void addRecipe() {
         Recipe recipeToAdd = view.readRecipe(service.getCurrentUser());
-        recipeToAdd.setId((long) service.getRecipes().size() + 1);
+        recipeToAdd.setId(service.getRecipeId());
         view.printRecipeNoDetail(recipeToAdd);
         service.addRecipe(recipeToAdd);
     }

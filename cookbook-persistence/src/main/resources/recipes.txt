@@ -24,7 +24,7 @@ Pea soup
 SOUP
 SALTY
 [id]
-3
+2
 [user_id]
 1
 [name]
@@ -40,19 +40,3 @@ Beanos steak
 [categories]
 MAIN_COURSE
 SALTY
-[id]
-4
-[user_id]
-1
-[name]
-cheesecake
-[ingredients]
-3.0 PIECE egg
-5.0 LITER milk
-[preparation]
-	stir really hard until done
-[servings]
-4
-[categories]
-SWEET
-DESSERT
