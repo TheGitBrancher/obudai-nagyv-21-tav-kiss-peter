@@ -43,8 +43,14 @@ public class App {
                 login();
                 break;
             case "2":
-                listRecipes();
-                break;
+                try {
+                    listRecipes();
+                    break;
+                } catch (Exception e){
+                    view.printInvalidInput();
+                    homeScreen();
+                    break;
+                }
             case "Q":
             case "q":
                 saveAppState();
