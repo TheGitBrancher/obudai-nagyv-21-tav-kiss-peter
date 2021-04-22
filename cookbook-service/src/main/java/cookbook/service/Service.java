@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 public class Service implements IService {
@@ -74,8 +75,11 @@ public class Service implements IService {
 
     @Override
     public void deleteRecipe(String input) {
-        data.getRecipes().remove(Integer.parseInt(input) + 1);
-        getCurrentUser().getOwnRecipes().remove(Integer.parseInt(input) + 1);
+        Recipe recipeToDelete = data.getRecipes().stream().filter(y -> y.getId().equals(Long.parseLong(input))).findAny().get();
+        data.getRecipes().remove(recipeToDelete);
+        List<Comment> commentsToDelete = data.getComments().stream().filter(y->y.getId().equals(recipeToDelete.getId())).collect(Collectors.toList());
+        data.getComments().removeAll(commentsToDelete);
+        getCurrentUser().getOwnRecipes().remove(recipeToDelete);
     }
 
     public User getCurrentlyLoggedIn() {

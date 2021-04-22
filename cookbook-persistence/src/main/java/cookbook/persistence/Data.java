@@ -80,8 +80,7 @@ public class Data {
                         i++;
                         StringBuilder preparation = new StringBuilder();
                         while (!recipeStrings.get(i).startsWith("[")) {
-                            preparation.append(recipeStrings.get(i));
-                            preparation.append("\n");
+                            preparation.append(recipeStrings.get(i)).append("\n");
                             i++;
                         }
                         recipe.setPreparation(preparation.toString());
@@ -153,7 +152,7 @@ public class Data {
 
     public void saveCurrentRecipes() {
         try {
-            PrintWriter pw = new PrintWriter(new FileWriter("cookbook-persistence/src/main/resources/comments.txt"));
+            PrintWriter pw = new PrintWriter(new FileWriter("cookbook-persistence/src/main/resources/recipes.txt"));
             for (Recipe recipe : recipes) {
                 StringBuilder stringBuilder = new StringBuilder();
                 stringBuilder.append("[id]").append("\n")
@@ -169,9 +168,10 @@ public class Data {
                             .append(ingredient.getName()).append("\n");
                 }
                 stringBuilder.append("[preparation]").append("\n")
-                        .append(recipe.getPreparation()).append("\n")
+                        .append(recipe.getPreparation())
                         .append("[servings]").append("\n")
-                        .append(recipe.getServings()).append("\n");
+                        .append(recipe.getServings()).append("\n")
+                        .append("[categories]").append("\n");
                 for (Category category : recipe.getCategories()) {
                     stringBuilder.append(category).append("\n");
                 }

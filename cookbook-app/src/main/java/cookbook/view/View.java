@@ -34,7 +34,7 @@ public class View implements IView{
         System.out.println("How do you make this dish? (type 'C' to continue)");
         String prep = getInput();
         if (!prep.equalsIgnoreCase("c")) {
-            recipe.setPreparation(prep);
+            recipe.setPreparation(prep + "\n");
         }
 
         System.out.println("How would you categorize this dish? (type 'C' to continue)");
@@ -106,7 +106,13 @@ public class View implements IView{
         for (Ingredient ingredient : recipe.getIngredients()){
             System.out.printf("\t%f %s %s%n", ingredient.getAmount(), ingredient.getUnit(), ingredient.getName());
         }
-        System.out.printf("Preparation:%s%n", recipe.getPreparation());
+        System.out.printf("Preparation: %n\t%s", recipe.getPreparation());
+        System.out.println("Categories:");
+        for (Category category : recipe.getCategories())
+        {
+            System.out.printf("\t%s%n", category);
+        }
+        System.out.println();
     }
 
     @Override
@@ -126,8 +132,8 @@ public class View implements IView{
     @Override
     public void printRecipeComment(Recipe recipe) {
         for (Comment comment : recipe.getComments()){
-            System.out.printf("%d:\t%s", comment.getId(), comment.getTimestamp().toString());
-            System.out.println(comment.getDescription());
+            System.out.printf("%d:\t%s%n", comment.getId(), comment.getTimestamp().toString());
+            System.out.printf("%s%n%n", comment.getDescription());
         }
     }
 

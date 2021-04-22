@@ -122,17 +122,21 @@ public class App {
                 homeScreen();
             default:
                 printRecipe(Integer.parseInt(input));
-                if (service.isLoggedIn()) {
-                    view.printUserRecipeOptions();
-                } else {
-                    view.printGuestRecipeOptions();
-                }
+                printRecipeOptions();
                 try {
                     processRecipeMenuInput(service.getRecipes().get(Integer.parseInt(input)), view.getInput());
                 } catch (Exception e) {
                     view.printInvalidInput();
                     listRecipes();
                 }
+        }
+    }
+
+    private void printRecipeOptions() {
+        if (service.isLoggedIn()) {
+            view.printUserRecipeOptions();
+        } else {
+            view.printGuestRecipeOptions();
         }
     }
 
@@ -144,18 +148,15 @@ public class App {
         switch (input) {
             case "1":
                 view.printRecipeComment(recipe);
-                if (service.isLoggedIn()) {
-                    view.printUserRecipeOptions();
-                } else {
-                    view.printGuestRecipeOptions();
-                }
                 break;
             case "2":
                 if (service.isLoggedIn()) {
                     newComment(recipe);
+                    break;
                 } else {
                     view.printNotAuthenticated();
                     listRecipes();
+                    break;
                 }
             case "q":
             case "Q":
@@ -163,6 +164,7 @@ public class App {
             default:
                 view.printInvalidInput();
         }
+        printRecipeOptions();
         processRecipeMenuInput(recipe, view.getInput());
     }
 
