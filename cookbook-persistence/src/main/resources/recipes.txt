@@ -1,0 +1,75 @@
+[id]
+1
+[user_id]
+1
+[name]
+Pea soup
+[ingredients]
+15.0 MILLILITER olive
+1.0 PIECE garlic
+0.5 PIECE onion
+200.0 GRAM peas
+300.0 MILLILITER chicken
+50.0 MILLILITER cream
+[preparation]
+Heat the oil in a saucepan over a medium heat. Add the onion and garlic and fry for
+34 minutes, until softened.
+Add the frozen peas and chicken or vegetable stock and bring to the boil. Reduce the
+heat and simmer for ten minutes.
+Add the cream and use a hand blender to liquidise the soup.
+Season, to taste and serve in a warm bowl, garnished with a mint leaf.
+[servings]
+2
+[categories]
+SOUP
+SALTY
+[id]
+2
+[user_id]
+1
+[name]
+Carlos dish
+[ingredients]
+15.0 MILLILITER olive
+1.0 PIECE garlic
+0.5 PIECE onion
+678.0 GRAM peas
+300.0 MILLILITER chicken
+50.0 MILLILITER cream
+[preparation]
+Heat the oil in a saucepan over a medium heat. Add the onion and garlic and fry for
+34 minutes, until softened.
+Add the frozen peas and chicken or vegetable stock and bring to the boil. Reduce the
+heat and simmer for ten minutes.
+Add the cream and use a hand blender to liquidise the soup.
+Season, to taste and serve in a warm bowl, garnished with a mint leaf.
+[servings]
+3
+[categories]
+SOUP
+SALTY
+[id]
+3
+[user_id]
+1
+[name]
+Beanos steak
+[ingredients]
+15.0 MILLILITER olive
+2.0 PIECE garlic
+0.5 PIECE onion
+200.0 GRAM peas
+300.0 MILLILITER chicken
+50.0 MILLILITER cream
+[preparation]
+Heat the oil in a saucepan over a medium heat. Add the onion and garlic and fry for
+34 minutes, until softened.
+Add the frozen peas and chicken or vegetable stock and bring to the boil. Reduce the
+heat and simmer for ten minutes.
+Add the cream and use a hand blender to liquidise the soup.
+Season, to taste and serve in a warm bowl, garnished with a mint leaf.
+[servings]
+4
+[categories]
+SOUP
+SALTY
