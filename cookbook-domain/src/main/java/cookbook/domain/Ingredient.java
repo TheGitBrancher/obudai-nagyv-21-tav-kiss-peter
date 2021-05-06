@@ -1,8 +1,20 @@
 package cookbook.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+@Entity
 public class Ingredient {
+
+    @Id
+    @GeneratedValue
+    private int id;
+
     private double amount;
     private String name;
+
     private Unit unit;
 
     public double getAmount() {

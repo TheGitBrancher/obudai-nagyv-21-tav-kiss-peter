@@ -1,9 +1,16 @@
 package cookbook.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import java.util.List;
 
+@Entity
 public class Cook extends User {
+
+    @OneToMany(mappedBy = "uploader")
     private List<Recipe> ownRecipes;
+
+    @OneToMany(mappedBy = "owner")
     private List<Comment> comments;
 
     public List<Recipe> getOwnRecipes() {

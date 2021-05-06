@@ -1,13 +1,26 @@
 package cookbook.domain;
 
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
 public class Recipe {
+
+    @Id
     private Long id;
+
+    @ManyToOne
     private Cook uploader;
+
+    @Transient
     private List<Ingredient> ingredients;
+
+    @Transient
     private List<Category> categories;
+
+    @OneToMany
     private List<Comment> comments;
+
     private String name;
     private Integer servings;
     private String preparation;

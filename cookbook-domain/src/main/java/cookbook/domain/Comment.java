@@ -1,10 +1,18 @@
 package cookbook.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
 
+@Entity
 public class Comment {
+
+    @Id
     private Long id;
     private Long recipeId;
+
+    @ManyToOne
     private Cook owner;
     private String description;
     private LocalDateTime timestamp;
