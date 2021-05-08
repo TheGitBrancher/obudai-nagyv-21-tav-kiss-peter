@@ -24,7 +24,11 @@ public class App {
 
         view.printWelcome();
 
+        service.findAll().forEach(x -> view.printRecipe(x));
+
         homeScreen();
+
+
     }
 
     private void homeScreen() {

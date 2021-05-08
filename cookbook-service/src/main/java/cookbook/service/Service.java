@@ -2,6 +2,7 @@ package cookbook.service;
 
 import cookbook.domain.*;
 import cookbook.persistence.Data;
+import cookbook.persistence.repository.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +18,14 @@ public class Service implements IService {
     @Autowired
     private Data data;
 
+    @Autowired
+    private RecipeRepository recipeRepository;
+
     private User currentlyLoggedIn;
+
+    public Iterable<Recipe> findAll()  {
+        return recipeRepository.findAll();
+    }
 
     @Override
     public void login(String input) {

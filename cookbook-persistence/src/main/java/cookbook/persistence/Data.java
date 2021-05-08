@@ -1,6 +1,8 @@
 package cookbook.persistence;
 
 import cookbook.domain.*;
+import cookbook.persistence.repository.RecipeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
 
@@ -19,6 +21,9 @@ public class Data {
     private List<Cook> cooks;
     private List<Recipe> recipes;
     private List<Comment> comments;
+
+    @Autowired
+    private RecipeRepository recipeRepository;
 
     public List<Cook> getCooks() {
         return cooks;
@@ -106,6 +111,7 @@ public class Data {
                 }
             }
             recipes.add(recipe);
+            recipeRepository.save(recipe);
         }
         return recipes;
     }
