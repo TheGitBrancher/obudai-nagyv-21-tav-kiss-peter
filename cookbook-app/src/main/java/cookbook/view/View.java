@@ -5,6 +5,7 @@ import cookbook.persistence.entity.Comment;
 import cookbook.persistence.entity.Cook;
 import cookbook.persistence.entity.Ingredient;
 import cookbook.persistence.entity.Recipe;
+import dto.*;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -16,12 +17,11 @@ public class View implements IView{
     private final Scanner in = new Scanner(System.in);
 
     @Override
-    public Recipe readRecipe(Cook cook) {
-        Recipe recipe = new Recipe();
+    public RecipeDto readRecipe() {
+        RecipeDto recipe = new RecipeDto();
         recipe.setIngredients(new ArrayList<>());
         recipe.setCategories(new ArrayList<>());
         recipe.setComments(new ArrayList<>());
-        recipe.setUploader(cook);
 
         System.out.println("What's the name of your dish?");
         recipe.setName(getInput());
@@ -56,11 +56,12 @@ public class View implements IView{
             }
         }
         System.out.println("-- Recipe created with the following informations: --");
+
         return recipe;
     }
 
     @Override
-    public void printRecipeNoDetail(Recipe recipe) {
+    public void printRecipeNoDetail(RecipeDto recipe) {
         System.out.printf("Name:\t%s%n", recipe.getName());
         System.out.printf("Recipe ID:\t%d%n", recipe.getId());
         System.out.printf("Servings:\t%d%n", recipe.getServings());
@@ -73,8 +74,8 @@ public class View implements IView{
         }
     }
 
-    private Ingredient addIngredient() {
-        Ingredient ingredient = new Ingredient();
+    private IngredientDto addIngredient() {
+        IngredientDto ingredient = new IngredientDto();
         ingredient.setAmount(Double.parseDouble(getInput()));
         ingredient.setUnit(Unit.valueOf(getInput().toUpperCase()));
         ingredient.setName(getInput());
@@ -103,13 +104,13 @@ public class View implements IView{
     }
 
     @Override
-    public void printRecipe(Recipe recipe) {
+    public void printRecipe(RecipeDto recipe) {
         System.out.printf("\t-- Recipe: %s --%n", recipe.getName());
         System.out.printf("Recipe ID:\t%s%n", recipe.getId());
         System.out.printf("Uploader:\t%s%n", recipe.getUploader().getUsername());
         System.out.printf("Servings:\t%s%n", recipe.getServings());
         System.out.println("Ingredients:");
-        for (Ingredient ingredient : recipe.getIngredients()){
+        for (IngredientDto ingredient : recipe.getIngredients()){
             System.out.printf("\t%f %s %s%n", ingredient.getAmount(), ingredient.getUnit(), ingredient.getName());
         }
         System.out.printf("Preparation: %n\t%s", recipe.getPreparation());
@@ -136,15 +137,15 @@ public class View implements IView{
     }
 
     @Override
-    public void printRecipeComment(Recipe recipe) {
-        for (Comment comment : recipe.getComments()){
+    public void printRecipeComment(RecipeDto recipe) {
+        for (CommentDto comment : recipe.getComments()){
             System.out.printf("%d:\t%s%n", comment.getId(), comment.getTimestamp().toString());
             System.out.printf("%s%n%n", comment.getDescription());
         }
     }
 
     @Override
-    public void printRecipes(List<Recipe> recipes) {
+    public void printRecipes(List<RecipeDto> recipes) {
         for (int i = 0; i < recipes.size(); i++){
             System.out.printf("%d: %s%n", i, recipes.get(i).getName());
         }
@@ -208,7 +209,7 @@ public class View implements IView{
     }
 
     @Override
-    public void printSuccessfulComment(Recipe recipe, Cook currentUser, String newComment) {
+    public void printSuccessfulComment(RecipeDto recipe, UserDto currentUser, String newComment) {
         System.out.printf("-- %s user created comment (%s) saved for %s recipe --%n", currentUser.getUsername(), newComment, recipe.getName());
     }
 

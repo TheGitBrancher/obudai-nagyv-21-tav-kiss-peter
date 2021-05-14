@@ -1,5 +1,4 @@
--- Users
-
+--Users
 insert into user (id, dtype, username, password) values
     (1, 'Cook', 'gipszjakab', 'password'),
     (2, 'Cook', 'palkata', '123456');
@@ -13,8 +12,7 @@ insert into authorities values
     ('gipszjakab', 'USERS'),
     ('palkata', 'USERS');
 
--- Recipes
-
+--Recipes
 insert into recipe (id, name, preparation, servings, uploader_id) values (
     1,
     'Pea soup',
@@ -62,7 +60,6 @@ insert into recipe_ingredients (recipe_id, amount, unit, name) values
     (2, 8.0, 'PIECE', 'french bread slice'),
     (2, 0.5, 'KILOGRAM', 'beef');
 
--- Comments
-
+--Comments
 insert into comment (id, recipe_id, owner_id, timestamp, description) values
     (1, 1, 2, '2021-01-08T15:30:39.881330200', 'Very yummy.');

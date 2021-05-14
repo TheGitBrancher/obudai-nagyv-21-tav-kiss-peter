@@ -107,6 +107,11 @@ public class Service implements IService {
         return recipeDtoList;
     }
 
+    public RecipeDto getRecipeById(Long id) {
+        Recipe recipe = recipeRepository.findById(id).get();
+        return recipeTransformer.convertToRecipeDto(recipe);
+    }
+
     @Override
     public Set<Category> getCategories() {
         return null;

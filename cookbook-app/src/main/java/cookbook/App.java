@@ -1,18 +1,14 @@
 package cookbook;
 
 import cookbook.persistence.entity.Recipe;
-import cookbook.persistence.Data;
 import cookbook.service.Service;
 import cookbook.view.View;
+import dto.RecipeDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class App {
-
-    @Autowired
-    private Data data;
-
     @Autowired
     private View view;
 
@@ -20,11 +16,8 @@ public class App {
     private Service service;
 
     public void start() {
-
         view.printWelcome();
-
         homeScreen();
-
     }
 
     private void homeScreen() {
@@ -53,16 +46,11 @@ public class App {
                 }
             case "Q":
             case "q":
-                saveAppState();
                 System.exit(-1);
             default:
                 view.printInvalidInput();
                 homeScreen();
         }
-    }
-
-    private void saveAppState() {
-        service.saveData();
     }
 
     private void processPostLoginInput() {
@@ -95,8 +83,7 @@ public class App {
     }
 
     private void addRecipe() {
-        Recipe recipeToAdd = view.readRecipe(service.getCurrentUser());
-        recipeToAdd.setId(service.getRecipeId());
+        RecipeDto recipeToAdd = view.readRecipe();
         view.printRecipeNoDetail(recipeToAdd);
         service.addRecipe(recipeToAdd);
     }
@@ -136,7 +123,7 @@ public class App {
                 printRecipe(Integer.parseInt(input));
                 printRecipeOptions();
                 try {
-                    processRecipeMenuInput(service.getRecipes().get(Integer.parseInt(input)), view.getInput());
+                    processRecipeMenuInput(service.getRecipeById(Long.parseLong(input)), view.getInput());
                 } catch (Exception e) {
                     view.printInvalidInput();
                     listRecipes();
@@ -153,10 +140,10 @@ public class App {
     }
 
     private void printRecipe(int id) {
-        view.printRecipe(service.getRecipes().get(id));
+        view.printRecipe(service.getRecipeById((long)id));
     }
 
-    private void processRecipeMenuInput(Recipe recipe, String input) {
+    private void processRecipeMenuInput(RecipeDto recipe, String input) {
         switch (input) {
             case "1":
                 view.printRecipeComment(recipe);
@@ -180,11 +167,11 @@ public class App {
         processRecipeMenuInput(recipe, view.getInput());
     }
 
-    private void newComment(Recipe recipe) {
+    private void newComment(RecipeDto recipe) {
         view.printNewCommentForm();
         String newComment = view.getInput();
         service.saveComment(recipe, newComment);
-        view.printSuccessfulComment(recipe, service.getCurrentUser(), newComment);
+        view.printSuccessfulComment(recipe, service.getCurrentlyLoggedIn(), newComment);
     }
 
     private void deleteRecipe() {

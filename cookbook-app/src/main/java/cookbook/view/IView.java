@@ -2,12 +2,15 @@ package cookbook.view;
 
 import cookbook.persistence.entity.Cook;
 import cookbook.persistence.entity.Recipe;
+import dto.CookDto;
+import dto.RecipeDto;
+import dto.UserDto;
 
 import java.util.List;
 
 public interface IView {
 
-    Recipe readRecipe(Cook cook);
+    RecipeDto readRecipe();
 
     void printWelcome();
 
@@ -15,15 +18,15 @@ public interface IView {
 
     void printGuestOptions();
 
-    void printRecipe(Recipe recipe);
+    void printRecipe(RecipeDto recipe);
 
     void printUserRecipeOptions();
 
     void printGuestRecipeOptions();
 
-    void printRecipeComment(Recipe recipe);
+    void printRecipeComment(RecipeDto recipe);
 
-    void printRecipes(List<Recipe> recipes);
+    void printRecipes(List<RecipeDto> recipes);
 
     void printNewCommentForm();
 
@@ -45,9 +48,9 @@ public interface IView {
 
     void printInvalidInput();
 
-    void printSuccessfulComment(Recipe recipe, Cook currentUser, String newComment);
+    void printSuccessfulComment(RecipeDto recipe, UserDto currentUser, String newComment);
 
     void printSuccessfulDelete(String toDelete);
 
-    void printRecipeNoDetail(Recipe recipe);
+    void printRecipeNoDetail(RecipeDto recipe);
 }

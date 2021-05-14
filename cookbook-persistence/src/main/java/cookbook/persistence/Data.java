@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class Data {
-    private List<Cook> cooks;
+    /*private List<Cook> cooks;
     private List<Recipe> recipes;
     private List<Comment> comments;
 
@@ -209,5 +209,5 @@ public class Data {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }
