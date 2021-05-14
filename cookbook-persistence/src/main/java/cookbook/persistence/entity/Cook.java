@@ -1,4 +1,4 @@
-package cookbook.domain;
+package cookbook.persistence.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;

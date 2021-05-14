@@ -1,4 +1,6 @@
-package cookbook.domain;
+package cookbook.persistence.entity;
+
+import cookbook.domain.Category;
 
 import javax.persistence.*;
 import java.util.List;
@@ -7,15 +9,19 @@ import java.util.List;
 public class Recipe {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
     private Cook uploader;
 
-    @Transient
+    @OneToMany
     private List<Ingredient> ingredients;
 
-    @Transient
+    @ElementCollection(targetClass = Category.class)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "recipeCategory", joinColumns = @JoinColumn(name = "recipe_id"))
+    @Column(name = "category_name", nullable = false)
     private List<Category> categories;
 
     @OneToMany

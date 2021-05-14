@@ -1,14 +1,10 @@
-package cookbook.domain;
+package dto;
 
-import javax.persistence.Entity;
 import javax.persistence.Id;
 
-@Entity
-public class User {
+public class UserDto {
 
-    @Id
     private Long id;
-
     private String username;
     private String password;
 

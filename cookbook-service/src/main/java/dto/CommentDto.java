@@ -1,19 +1,10 @@
-package cookbook.domain;
+package dto;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
 
-@Entity
-public class Comment {
+public class CommentDto {
 
-    @Id
     private Long id;
-    private Long recipeId;
-
-    @ManyToOne
-    private Cook owner;
     private String description;
     private LocalDateTime timestamp;
 
@@ -23,14 +14,6 @@ public class Comment {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Cook getOwner() {
-        return owner;
-    }
-
-    public void setOwner(Cook owner) {
-        this.owner = owner;
     }
 
     public String getDescription() {
@@ -47,13 +30,5 @@ public class Comment {
 
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
-    }
-
-    public Long getRecipeId() {
-        return recipeId;
-    }
-
-    public void setRecipeId(Long recipeId) {
-        this.recipeId = recipeId;
     }
 }

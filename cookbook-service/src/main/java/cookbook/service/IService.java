@@ -1,9 +1,12 @@
 package cookbook.service;
 
 import cookbook.domain.Category;
-import cookbook.domain.Cook;
-import cookbook.domain.Recipe;
-import cookbook.domain.User;
+import cookbook.persistence.entity.Cook;
+import cookbook.persistence.entity.Recipe;
+import cookbook.persistence.entity.User;
+import dto.CookDto;
+import dto.RecipeDto;
+import dto.UserDto;
 
 import java.util.List;
 import java.util.Set;
@@ -14,13 +17,13 @@ public interface IService {
 
     void logout();
 
-    void addRecipe(Recipe recipe);
+    void addRecipe(RecipeDto recipe);
 
-    void saveComment(Recipe recipe, String input);
+    void saveComment(RecipeDto recipe, String input);
 
     boolean isLoggedIn();
 
-    List<Recipe> getRecipes();
+    List<RecipeDto> getRecipes();
 
     Set<Category> getCategories();
 
@@ -28,13 +31,5 @@ public interface IService {
 
     void deleteRecipe(String input);
 
-    User getCurrentlyLoggedIn();
-
-    void setCurrentlyLoggedIn(User currentlyLoggedIn);
-
-    void saveData();
-
-    void loadData();
-
-    Long getRecipeId();
+    UserDto getCurrentlyLoggedIn();
 }

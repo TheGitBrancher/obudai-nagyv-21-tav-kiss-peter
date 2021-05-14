@@ -1,6 +1,6 @@
 package cookbook;
 
-import cookbook.domain.Recipe;
+import cookbook.persistence.entity.Recipe;
 import cookbook.persistence.Data;
 import cookbook.service.Service;
 import cookbook.view.View;
@@ -20,14 +20,10 @@ public class App {
     private Service service;
 
     public void start() {
-        service.loadData();
 
         view.printWelcome();
 
-        service.findAll().forEach(x -> view.printRecipe(x));
-
         homeScreen();
-
 
     }
 
@@ -128,6 +124,7 @@ public class App {
     }
 
     private void listRecipes() {
+
         view.printRecipes(service.getRecipes());
 
         String input = view.getInput();

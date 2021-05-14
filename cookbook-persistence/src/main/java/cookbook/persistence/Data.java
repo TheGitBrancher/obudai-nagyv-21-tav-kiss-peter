@@ -1,6 +1,10 @@
 package cookbook.persistence;
 
 import cookbook.domain.*;
+import cookbook.persistence.entity.Comment;
+import cookbook.persistence.entity.Cook;
+import cookbook.persistence.entity.Ingredient;
+import cookbook.persistence.entity.Recipe;
 import cookbook.persistence.repository.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

@@ -1,8 +1,7 @@
 package cookbook.view;
 
-import cookbook.domain.Cook;
-import cookbook.domain.Recipe;
-import cookbook.domain.User;
+import cookbook.persistence.entity.Cook;
+import cookbook.persistence.entity.Recipe;
 
 import java.util.List;
 

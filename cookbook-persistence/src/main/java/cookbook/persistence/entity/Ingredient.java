@@ -1,20 +1,20 @@
-package cookbook.domain;
+package cookbook.persistence.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import cookbook.domain.Unit;
+
+import javax.persistence.*;
 
 @Entity
 public class Ingredient {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private double amount;
     private String name;
 
+    @Enumerated(EnumType.STRING)
     private Unit unit;
 
     public double getAmount() {
