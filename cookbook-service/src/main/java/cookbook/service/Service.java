@@ -1,6 +1,5 @@
 package cookbook.service;
 
-import cookbook.domain.*;
 import cookbook.persistence.entity.*;
 import cookbook.persistence.repository.*;
 import cookbook.service.dto.*;
@@ -14,7 +13,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Set;
 
 @Component
 public class Service implements IService {
@@ -122,11 +120,6 @@ public class Service implements IService {
         List<RecipeDto> recipes = getRecipes();
 
         return recipes.stream().filter(y -> y.getId().equals(id)).findFirst().get();
-    }
-
-    @Override
-    public Set<Category> getCategories() {
-        return null;
     }
 
     @Override

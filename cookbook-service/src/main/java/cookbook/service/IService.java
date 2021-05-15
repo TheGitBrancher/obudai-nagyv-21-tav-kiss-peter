@@ -22,8 +22,6 @@ public interface IService {
 
     List<RecipeDto> getRecipes();
 
-    Set<Category> getCategories();
-
     Cook getCurrentUser();
 
     void deleteRecipe(String input);
