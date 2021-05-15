@@ -84,8 +84,8 @@ public class App {
 
     private void addRecipe() {
         RecipeDto recipeToAdd = view.readRecipe();
-        view.printRecipeNoDetail(recipeToAdd);
         service.addRecipe(recipeToAdd);
+        view.printRecipeNoDetail(recipeToAdd);
     }
 
     private void logout() {
@@ -123,7 +123,8 @@ public class App {
                 printRecipe(Integer.parseInt(input));
                 printRecipeOptions();
                 try {
-                    processRecipeMenuInput(service.getRecipeById(Long.parseLong(input)), view.getInput());
+                    RecipeDto recipeDto = service.getRecipeById(Long.parseLong(input));
+                    processRecipeMenuInput(recipeDto, view.getInput());
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                     view.printInvalidInput();

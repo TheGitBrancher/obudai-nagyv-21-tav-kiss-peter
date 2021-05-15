@@ -80,6 +80,7 @@ public class Service implements IService {
     }
 
     @Override
+    @Transactional
     public void saveComment(RecipeDto recipeDto, String input) {
         Recipe recipeToAddCommentTo = recipeRepository.findById(recipeDto.getId()).stream().findFirst().get();
 
