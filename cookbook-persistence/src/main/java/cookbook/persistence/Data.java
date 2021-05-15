@@ -1,26 +1,5 @@
 package cookbook.persistence;
 
-import cookbook.domain.*;
-import cookbook.persistence.entity.Comment;
-import cookbook.persistence.entity.Cook;
-import cookbook.persistence.entity.Ingredient;
-import cookbook.persistence.entity.Recipe;
-import cookbook.persistence.repository.RecipeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.util.ResourceUtils;
-
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
-@Component
 public class Data {
     /*private List<Cook> cooks;
     private List<Recipe> recipes;

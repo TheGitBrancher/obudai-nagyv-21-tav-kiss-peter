@@ -10,6 +10,8 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Long recipe_id;
+
     @ManyToOne
     private Cook owner;
 
@@ -46,5 +48,13 @@ public class Comment {
 
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public Long getRecipe_id() {
+        return recipe_id;
+    }
+
+    public void setRecipe_id(Long recipe_id) {
+        this.recipe_id = recipe_id;
     }
 }

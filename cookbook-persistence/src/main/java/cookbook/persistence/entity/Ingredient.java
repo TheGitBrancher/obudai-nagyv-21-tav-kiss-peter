@@ -4,12 +4,8 @@ import cookbook.domain.Unit;
 
 import javax.persistence.*;
 
-@Entity
+@Embeddable
 public class Ingredient {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
 
     private double amount;
     private String name;
@@ -40,4 +36,5 @@ public class Ingredient {
     public void setUnit(Unit unit) {
         this.unit = unit;
     }
+
 }

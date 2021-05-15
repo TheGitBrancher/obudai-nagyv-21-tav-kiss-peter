@@ -15,8 +15,11 @@ public class Recipe {
     @ManyToOne
     private Cook uploader;
 
-    @OneToMany
+    @ElementCollection
     private List<Ingredient> ingredients;
+
+    @OneToMany
+    private List<Comment> comments;
 
     @ElementCollection(targetClass = Category.class)
     @Enumerated(EnumType.STRING)
@@ -24,11 +27,10 @@ public class Recipe {
     @Column(name = "category_name", nullable = false)
     private List<Category> categories;
 
-    @OneToMany
-    private List<Comment> comments;
-
     private String name;
     private Integer servings;
+
+    @Column(length = 2000)
     private String preparation;
 
     public Long getId() {

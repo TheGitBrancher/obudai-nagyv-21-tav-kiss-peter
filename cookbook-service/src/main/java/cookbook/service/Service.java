@@ -53,7 +53,7 @@ public class Service implements IService {
     }
 
     public boolean authenticate(UserDto user) {
-        List<User> users = (List<User>) userRepository.findAll();
+        List<User> users = (List<User>)userRepository.findAll();
         User userToLogin = users.stream().filter(y -> y.getUsername().equals(user.getUsername())).findFirst().get();
 
         if (userToLogin.getUsername() != null) {
@@ -82,6 +82,7 @@ public class Service implements IService {
 
         Comment comment = new Comment();
         Cook owner = getCurrentUser();
+        comment.setRecipe_id(recipeDto.getId());
         comment.setOwner(owner);
         comment.setTimestamp(LocalDateTime.now());
         comment.setDescription(input);
