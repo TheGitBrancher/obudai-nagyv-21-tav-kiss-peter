@@ -2,16 +2,10 @@ package transformer;
 
 import cookbook.persistence.entity.User;
 import dto.UserDto;
+import org.modelmapper.ModelMapper;
 
 public class UserTransformer {
-    public static UserDto getDto(User toTransform) {
 
-        UserDto dto = new UserDto();
+    private final ModelMapper modelMapper = new ModelMapper();
 
-        dto.setId(toTransform.getId());
-        dto.setUsername(toTransform.getUsername());
-        dto.setPassword(toTransform.getPassword());
-
-        return dto;
-    }
 }

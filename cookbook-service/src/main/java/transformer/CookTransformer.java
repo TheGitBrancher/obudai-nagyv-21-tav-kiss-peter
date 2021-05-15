@@ -1,15 +1,14 @@
 package transformer;
 
 import cookbook.persistence.entity.Cook;
-import cookbook.persistence.entity.Recipe;
 import dto.CookDto;
-import dto.RecipeDto;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class CookTransformer {
 
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper = new ModelMapper();
 
     public CookDto convertToCookDto(Cook cook) {
 

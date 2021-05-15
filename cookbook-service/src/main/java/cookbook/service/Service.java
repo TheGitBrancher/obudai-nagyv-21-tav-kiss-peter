@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import transformer.CookTransformer;
 import transformer.RecipeTransformer;
-import transformer.UserTransformer;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +37,7 @@ public class Service implements IService {
     private CookDto currentlyLoggedIn;
 
     @Override
+    @Transactional
     public void login(String input) {
         String[] splitted = input.split("-");
         UserDto userDto = new UserDto();
@@ -46,18 +47,20 @@ public class Service implements IService {
         if (authenticate(userDto)) {
             List<Cook> cooks = (List<Cook>)cookRepository.findAll();
             Cook toLogin = cooks.stream().filter(y-> y.getUsername().equals(userDto.getUsername())).findFirst().get();
+            toLogin.getComments().size();
+            toLogin.getOwnRecipes().size();
             currentlyLoggedIn = cookTransformer.convertToCookDto(toLogin);
         } else {
             throw new NoSuchElementException();
         }
     }
 
-    public boolean authenticate(UserDto user) {
+    public boolean authenticate(UserDto userDto) {
         List<User> users = (List<User>)userRepository.findAll();
-        User userToLogin = users.stream().filter(y -> y.getUsername().equals(user.getUsername())).findFirst().get();
+        User userToLogin = users.stream().filter(y -> y.getUsername().equals(userDto.getUsername())).findFirst().get();
 
         if (userToLogin.getUsername() != null) {
-            return userToLogin.getPassword().equals(user.getPassword());
+            return userToLogin.getPassword().equals(userDto.getPassword());
         }
         else {
             return false;
@@ -97,8 +100,13 @@ public class Service implements IService {
     }
 
     @Override
+    @Transactional
     public List<RecipeDto> getRecipes() {
         List<Recipe> recipeList = (List<Recipe>)recipeRepository.findAll();
+        recipeList.forEach(y -> y.getIngredients().size());
+        recipeList.forEach(y -> y.getComments().size());
+        recipeList.forEach(y -> y.getCategories().size());
+
         List<RecipeDto> recipeDtoList = new ArrayList<>();
 
         for (Recipe recipe : recipeList) {
@@ -108,9 +116,11 @@ public class Service implements IService {
         return recipeDtoList;
     }
 
+    @Transactional
     public RecipeDto getRecipeById(Long id) {
-        Recipe recipe = recipeRepository.findById(id).get();
-        return recipeTransformer.convertToRecipeDto(recipe);
+        List<RecipeDto> recipes = getRecipes();
+
+        return recipes.stream().filter(y -> y.getId().equals(id)).findFirst().get();
     }
 
     @Override

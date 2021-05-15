@@ -4,11 +4,10 @@ import cookbook.persistence.entity.Recipe;
 import dto.RecipeDto;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
-import org.modelmapper.spi.MatchingStrategy;
 
 public class RecipeTransformer {
 
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper = new ModelMapper();
 
     public RecipeDto convertToRecipeDto(Recipe recipe) {
 

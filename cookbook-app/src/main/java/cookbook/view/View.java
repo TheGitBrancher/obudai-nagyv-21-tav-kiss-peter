@@ -18,29 +18,30 @@ public class View implements IView{
 
     @Override
     public RecipeDto readRecipe() {
-        RecipeDto recipe = new RecipeDto();
-        recipe.setIngredients(new ArrayList<>());
-        recipe.setCategories(new ArrayList<>());
-        recipe.setComments(new ArrayList<>());
+
+        RecipeDto recipeDto = new RecipeDto();
+        recipeDto.setIngredients(new ArrayList<>());
+        recipeDto.setCategories(new ArrayList<>());
+        recipeDto.setComments(new ArrayList<>());
 
         System.out.println("What's the name of your dish?");
-        recipe.setName(getInput());
+        recipeDto.setName(getInput());
 
         System.out.println("How many people does this dish serve?");
-        recipe.setServings(Integer.parseInt(getInput()));
+        recipeDto.setServings(Integer.parseInt(getInput()));
 
         System.out.println("What kind of ingredients do you need?");
         do {
-            recipe.getIngredients().add(addIngredient());
+            recipeDto.getIngredients().add(addIngredient());
             System.out.println("Add another? (Y/N)");
         } while (!"n".equalsIgnoreCase(getInput()));
 
         System.out.println("How do you make this dish? (type 'C' to continue)");
         String prep = getInput();
         if (!prep.equalsIgnoreCase("c")) {
-            recipe.setPreparation(prep + "\n");
+            recipeDto.setPreparation(prep + "\n");
         } else {
-            recipe.setPreparation("\n");
+            recipeDto.setPreparation("\n");
         }
 
         System.out.println("How would you categorize this dish? (type 'C' to continue)");
@@ -51,17 +52,17 @@ public class View implements IView{
             if ("c".equalsIgnoreCase(input)) {
                 break;
             } else {
-                recipe.getCategories().add(categories.get(Integer.parseInt(input)));
+                recipeDto.getCategories().add(categories.get(Integer.parseInt(input)));
                 categories.remove(Integer.parseInt(input));
             }
         }
-        System.out.println("-- Recipe created with the following informations: --");
 
-        return recipe;
+        return recipeDto;
     }
 
     @Override
     public void printRecipeNoDetail(RecipeDto recipe) {
+        System.out.println("-- Recipe created with the following informations: --");
         System.out.printf("Name:\t%s%n", recipe.getName());
         System.out.printf("Recipe ID:\t%d%n", recipe.getId());
         System.out.printf("Servings:\t%d%n", recipe.getServings());
@@ -146,8 +147,8 @@ public class View implements IView{
 
     @Override
     public void printRecipes(List<RecipeDto> recipes) {
-        for (int i = 0; i < recipes.size(); i++){
-            System.out.printf("%d: %s%n", i, recipes.get(i).getName());
+        for (RecipeDto recipeDto : recipes) {
+            System.out.printf("%d: %s%n", recipeDto.getId(), recipeDto.getName());
         }
         System.out.println("Q: Go back");
     }

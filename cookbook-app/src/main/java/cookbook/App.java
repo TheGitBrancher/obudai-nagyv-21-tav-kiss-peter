@@ -125,6 +125,7 @@ public class App {
                 try {
                     processRecipeMenuInput(service.getRecipeById(Long.parseLong(input)), view.getInput());
                 } catch (Exception e) {
+                    System.out.println(e.getMessage());
                     view.printInvalidInput();
                     listRecipes();
                 }
