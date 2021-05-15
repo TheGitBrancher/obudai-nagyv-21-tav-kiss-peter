@@ -1,9 +1,8 @@
 package cookbook;
 
-import cookbook.persistence.entity.Recipe;
 import cookbook.service.Service;
 import cookbook.view.View;
-import dto.RecipeDto;
+import cookbook.service.dto.RecipeDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

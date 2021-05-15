@@ -1,7 +1,4 @@
-package dto;
-
-import cookbook.persistence.entity.Comment;
-import cookbook.persistence.entity.Recipe;
+package cookbook.service.dto;
 
 import java.util.List;
 

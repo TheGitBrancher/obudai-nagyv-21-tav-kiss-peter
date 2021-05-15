@@ -1,11 +1,7 @@
 package cookbook.view;
 
 import cookbook.domain.*;
-import cookbook.persistence.entity.Comment;
-import cookbook.persistence.entity.Cook;
-import cookbook.persistence.entity.Ingredient;
-import cookbook.persistence.entity.Recipe;
-import dto.*;
+import cookbook.service.dto.*;
 import org.springframework.stereotype.Component;
 
 import java.util.*;

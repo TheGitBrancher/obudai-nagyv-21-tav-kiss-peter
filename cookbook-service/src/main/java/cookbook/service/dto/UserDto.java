@@ -1,6 +1,4 @@
-package dto;
-
-import javax.persistence.Id;
+package cookbook.service.dto;
 
 public class UserDto {
 

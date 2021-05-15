@@ -1,4 +1,4 @@
-package dto;
+package cookbook.service.dto;
 
 import java.time.LocalDateTime;
 

@@ -1,10 +1,7 @@
 package cookbook.view;
 
-import cookbook.persistence.entity.Cook;
-import cookbook.persistence.entity.Recipe;
-import dto.CookDto;
-import dto.RecipeDto;
-import dto.UserDto;
+import cookbook.service.dto.RecipeDto;
+import cookbook.service.dto.UserDto;
 
 import java.util.List;
 

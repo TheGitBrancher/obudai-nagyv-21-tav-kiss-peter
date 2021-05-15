@@ -1,8 +1,6 @@
-package dto;
+package cookbook.service.dto;
 
 import cookbook.domain.Unit;
-
-import javax.persistence.*;
 
 public class IngredientDto {
 

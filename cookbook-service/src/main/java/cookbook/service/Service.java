@@ -3,11 +3,11 @@ package cookbook.service;
 import cookbook.domain.*;
 import cookbook.persistence.entity.*;
 import cookbook.persistence.repository.*;
-import dto.*;
+import cookbook.service.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import transformer.CookTransformer;
-import transformer.RecipeTransformer;
+import cookbook.service.transformer.CookTransformer;
+import cookbook.service.transformer.RecipeTransformer;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;

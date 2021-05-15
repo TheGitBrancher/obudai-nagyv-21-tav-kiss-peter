@@ -1,7 +1,6 @@
-package dto;
+package cookbook.service.dto;
 
 import cookbook.domain.Category;
-import cookbook.persistence.entity.Ingredient;
 
 import java.util.List;
 
