@@ -6,7 +6,17 @@ dependencies {
     implementation project(':cookbook-service')
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
+    implementation 'javax.servlet:jstl:1.2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDir 'src/main/webapp'
+        }
+    }
 }
 
 test {

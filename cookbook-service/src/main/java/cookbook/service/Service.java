@@ -124,8 +124,9 @@ public class Service implements IService {
 
     @Override
     public Cook getCurrentUser() {
-        List<Cook> cooks = (List<Cook>)cookRepository.findAll();
-        return cooks.stream().filter(y -> y.getId().equals(getCurrentlyLoggedIn().getId())).findFirst().get();
+        //List<Cook> cooks = (List<Cook>)cookRepository.findAll();
+        //return cooks.stream().filter(y -> y.getId().equals(getCurrentlyLoggedIn().getId())).findFirst().get();
+        return cookRepository.findAll().get(0);
     }
 
     @Override
