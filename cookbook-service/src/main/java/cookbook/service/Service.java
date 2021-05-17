@@ -72,7 +72,7 @@ public class Service implements IService {
     }
 
     private BiPredicate<RecipeDto, String> createPredicate(List<String> filter) {
-        if (filter.isEmpty()) {
+        if (filter == null) {
             return allPredicate;
         }
 
