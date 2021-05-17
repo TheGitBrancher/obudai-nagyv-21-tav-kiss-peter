@@ -4,6 +4,7 @@ import cookbook.domain.Category;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Recipe {
@@ -19,6 +20,7 @@ public class Recipe {
     private List<Ingredient> ingredients;
 
     @OneToMany
+    @JoinColumn(name = "recipe_id")
     private List<Comment> comments;
 
     @ElementCollection(targetClass = Category.class)
@@ -95,5 +97,18 @@ public class Recipe {
 
     public void setPreparation(String preparation) {
         this.preparation = preparation;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Recipe recipe = (Recipe) o;
+        return Objects.equals(id, recipe.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

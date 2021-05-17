@@ -7,13 +7,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Recipes</a>
+                    <a class="nav-link" href="/">Recipes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">My Recipes</a>
+                    <a class="nav-link" href="/myRecipes">My Recipes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">New Recipe</a>
+                    <a class="nav-link" href="/newRecipe">New Recipe</a>
                 </li>
             </ul>
             <a class="btn btn-secondary" href="/logout">Logout</a>

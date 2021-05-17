@@ -12,24 +12,26 @@
 <jsp:include page="navbar.jsp" />
 <div class="container mt-3">
     <div class="card">
-        <h5 class="card-header bg-primary text-white">Recipes</h5>
+        <h5 class="card-header bg-primary text-white">My Recipes</h5>
         <div class="card-body">
             <table class="table table-hover">
                 <tr>
                     <th>Name</th>
-                    <th>Categories</th>
                     <th>Servings</th>
                     <th>Uploader</th>
+                    <th></th>
                 </tr>
-                <c:forEach items="${recipes}" var="recipe">
+                <c:forEach items="${myRecipes}" var="recipe">
                     <tr>
                         <td><a href="/recipe/${recipe.id}">${recipe.name}</a></td>
-                        <td><c:forEach items="${recipe.categories}" var="cat" varStatus="status">
-                            ${cat.toString()}<c:if test="${status.count < recipe.categories.size()}">, </c:if>
-                        </c:forEach></td>
-
                         <td>${recipe.servings}</td>
                         <td>${recipe.uploader.username}</td>
+                        <td>
+                            <form method="post" action="/delete">
+                                <input type="hidden" name="recipeId" value="${recipe.id}">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
                     </tr>
                 </c:forEach>
             </table>

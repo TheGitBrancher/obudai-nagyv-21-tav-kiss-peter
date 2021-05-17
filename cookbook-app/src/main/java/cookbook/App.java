@@ -179,7 +179,7 @@ public class App {
     }
 
     private void deleteRecipe() {
-        String toDelete = view.readRecipeId();
+/*        String toDelete = view.readRecipeId();
         if (view.confirm().equalsIgnoreCase("y")) {
             try {
                 service.deleteRecipe(toDelete);
@@ -187,6 +187,6 @@ public class App {
             } catch (Exception e) {
                 view.printInvalidInput();
             }
-        }
+        }*/
     }
 }

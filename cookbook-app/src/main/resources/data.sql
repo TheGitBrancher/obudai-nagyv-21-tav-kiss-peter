@@ -64,5 +64,5 @@ insert into recipe_ingredients (recipe_id, amount, unit, name) values
 insert into comment (id, recipe_id, owner_id, timestamp, description) values
     (1, 1, 2, '2021-01-08T15:30:39.881330200', 'Very yummy.');
 
-insert into recipe_comments (recipe_id, comments_id) values
-    (1, 1);
+--insert into recipe_comments (recipe_id, comments_id) values
+  --  (1, 1);

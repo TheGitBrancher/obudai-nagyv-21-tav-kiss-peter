@@ -27,11 +27,29 @@ public class MainController {
         return "recipeById";
     }
 
+    @GetMapping("/myRecipes")
+    public String myRecipes(Model model) {
+        model.addAttribute("myRecipes", service.getMyRecipes());
+        return "myRecipes";
+    }
+
     @PostMapping("/addComment")
-    public String addRecipe(Long recipeId, String description) {
+    public String addComment(Long recipeId, String description) {
         RecipeDto recipeDto = new RecipeDto();
         recipeDto.setId(recipeId);
         service.saveComment(recipeDto, description);
         return "redirect:/recipe/" + recipeId;
+    }
+
+    @GetMapping("/newRecipe")
+    public String newRecipe(Model model) {
+        model.addAttribute("categoryOptions", service.getCategoires());
+        return "newRecipe";
+    }
+
+    @PostMapping("/delete")
+    public String delete(Long recipeId) {
+        service.deleteRecipe(recipeId);
+        return "redirect:/myRecipes";
     }
 }

@@ -2,7 +2,6 @@ package cookbook;
 
 import cookbook.persistence.entity.Cook;
 import cookbook.persistence.repository.CookRepository;
-import cookbook.service.dto.CookDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,7 +32,7 @@ public class MyUserDetailService implements UserDetailsService {
 
 class MyUserDetails implements UserDetails {
 
-    private Cook cook;
+    private final Cook cook;
 
     public MyUserDetails(Cook cook) {
         this.cook = cook;

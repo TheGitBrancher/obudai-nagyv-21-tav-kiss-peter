@@ -1,5 +1,6 @@
 package cookbook.service;
 
+import cookbook.domain.Category;
 import cookbook.persistence.entity.*;
 import cookbook.persistence.repository.*;
 import cookbook.service.dto.*;
@@ -13,8 +14,10 @@ import cookbook.service.transformer.RecipeTransformer;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Component
 public class Service implements IService {
@@ -40,24 +43,24 @@ public class Service implements IService {
     @Transactional
     public void login(String input) {
 
-        String[] splitted = input.split("-");
+/*        String[] splitted = input.split("-");
         UserDto userDto = new UserDto();
         userDto.setUsername(splitted[0]);
         userDto.setPassword(splitted[1]);
 
         if (authenticate(userDto)) {
-            List<Cook> cooks = (List<Cook>)cookRepository.findAll();
+            List<Cook> cooks = cookRepository.findAll();
             Cook toLogin = cooks.stream().filter(y-> y.getUsername().equals(userDto.getUsername())).findFirst().get();
             toLogin.getComments().size();
             toLogin.getOwnRecipes().size();
             currentlyLoggedIn = cookTransformer.convertToCookDto(toLogin);
         } else {
             throw new NoSuchElementException();
-        }
+        }*/
     }
 
-    public boolean authenticate(UserDto userDto) {
-        List<User> users = (List<User>)userRepository.findAll();
+/*    public boolean authenticate(UserDto userDto) {
+        List<User> users = userRepository.findAll();
         User userToLogin = users.stream().filter(y -> y.getUsername().equals(userDto.getUsername())).findFirst().get();
 
         if (userToLogin.getUsername() != null) {
@@ -66,7 +69,7 @@ public class Service implements IService {
         else {
             return false;
         }
-    }
+    }*/
 
     @Override
     public void logout() {
@@ -104,8 +107,8 @@ public class Service implements IService {
     @Override
     @Transactional
     public List<RecipeDto> getRecipes() {
-        System.out.println(SecurityContextHolder.getContext().getAuthentication().getName());
-        List<Recipe> recipeList = (List<Recipe>)recipeRepository.findAll();
+        List<Recipe> recipeList = recipeRepository.findAll();
+        //FetchType.EAGER
         recipeList.forEach(y -> y.getIngredients().size());
         recipeList.forEach(y -> y.getComments().size());
         recipeList.forEach(y -> y.getCategories().size());
@@ -126,18 +129,37 @@ public class Service implements IService {
         return recipes.stream().filter(y -> y.getId().equals(id)).findFirst().get();
     }
 
-    @Override
-    public Cook getCurrentUser() {
-        List<Cook> cooks = (List<Cook>)cookRepository.findAll();
-        return cooks.stream().filter(y -> y.getId().equals(getCurrentlyLoggedIn().getId())).findFirst().get();
+    public List<RecipeDto> getMyRecipes() {
+        List<Recipe> myRecipes = recipeRepository.findAll();
+        List<RecipeDto> myRecipeDtos = new ArrayList<>();
+
+        for (Recipe recipe : myRecipes) {
+            if (recipe.getUploader().getUsername().equals(getCurrentUsername())) {
+                myRecipeDtos.add(recipeTransformer.convertToRecipeDto(recipe));
+            }
+        }
+
+        return myRecipeDtos;
+    }
+
+    private String getCurrentUsername() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
     @Override
-    public void deleteRecipe(String input) {
-        Recipe recipeToDelete = recipeRepository.findById(Long.parseLong(input)).stream().findFirst().get();
-        //commentRepository.deleteAll(recipeToDelete.getComments());
+    public Cook getCurrentUser() {
+        List<Cook> cooks = cookRepository.findAll();
+        return cooks.stream().filter(y -> y.getUsername().equals(getCurrentUsername())).findFirst().get();
+    }
+
+    public List<String> getCategoires() {
+        return Arrays.stream(Category.values()).map(Enum::toString).collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteRecipe(Long id) {
+        Recipe recipeToDelete = recipeRepository.findById(id).get();
         recipeRepository.delete(recipeToDelete);
-        //getCurrentUser().getOwnRecipes().remove(recipeToDelete);
     }
 
     @Override

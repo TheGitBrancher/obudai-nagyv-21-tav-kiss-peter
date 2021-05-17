@@ -10,7 +10,7 @@
 </head>
 <body>
 <jsp:include page="navbar.jsp" />
-<div class="container">
+<div class="container mt-3">
     <div class="card">
         <h5 class="card-header bg-primary text-white">${recipe.name}</h5>
         <div class="card-body">
