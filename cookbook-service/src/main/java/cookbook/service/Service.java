@@ -1,6 +1,7 @@
 package cookbook.service;
 
 import cookbook.domain.Category;
+import cookbook.domain.Unit;
 import cookbook.persistence.entity.*;
 import cookbook.persistence.repository.*;
 import cookbook.service.dto.*;
@@ -13,10 +14,7 @@ import cookbook.service.transformer.RecipeTransformer;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -77,10 +75,31 @@ public class Service implements IService {
     }
 
     @Override
-    public void addRecipe(RecipeDto recipe) {
-        recipe.setUploader(currentlyLoggedIn);
-        Recipe recipeToSave = recipeTransformer.convertDtoToRecipe(recipe);
-        recipeRepository.save(recipeToSave);
+    public void addRecipe(AddRecipeDto addRecipeDto) {
+        Recipe recipeToAdd = new Recipe();
+        recipeToAdd.setName(addRecipeDto.getName());
+        recipeToAdd.setCategories(addRecipeDto.getCategories());
+        recipeToAdd.setPreparation(addRecipeDto.getPreparation());
+        recipeToAdd.setUploader(getCurrentUser());
+        recipeToAdd.setServings(addRecipeDto.getServings());
+        recipeToAdd.setIngredients(ingredientFactory(addRecipeDto.getIngredients()));
+
+        recipeRepository.save(recipeToAdd);
+    }
+
+    private List<Ingredient> ingredientFactory(String ingredients) {
+
+        return Arrays.stream(ingredients.split(System.lineSeparator()))
+                .map(this::toIngredient).collect(Collectors.toList());
+    }
+
+    private Ingredient toIngredient(String line) {
+        Ingredient ingredientToAdd = new Ingredient();
+        String[] ingredientParts = line.split(" ");
+        ingredientToAdd.setAmount(Integer.parseInt(ingredientParts[0]));
+        ingredientToAdd.setUnit(Unit.valueOf(ingredientParts[1]));
+        ingredientToAdd.setName(ingredientParts[2]);
+        return ingredientToAdd;
     }
 
     @Override
@@ -152,7 +171,7 @@ public class Service implements IService {
         return cooks.stream().filter(y -> y.getUsername().equals(getCurrentUsername())).findFirst().get();
     }
 
-    public List<String> getCategoires() {
+    public List<String> getCategories() {
         return Arrays.stream(Category.values()).map(Enum::toString).collect(Collectors.toList());
     }
 

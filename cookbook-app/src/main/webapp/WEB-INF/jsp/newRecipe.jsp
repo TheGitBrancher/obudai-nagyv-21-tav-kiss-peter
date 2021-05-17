@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -14,7 +15,7 @@
     <div class="card">
         <h5 class="card-header bg-primary text-white">New Recipe</h5>
         <div class="card-body">
-            <form class="row row-cols-lg-auto" method="post" action="/addRecipe">
+            <form:form modelAttribute="addRecipeDto" class="row row-cols-lg-auto" method="post" action="/addRecipe">
                 <div class="input-group mb-3">
                     <div class="input-group-text">Name</div>
                     <input type="text" name="name" class="form-control">
@@ -42,7 +43,7 @@
                 <div>
                     <button type="submit" class="btn btn-primary">Save</button>
                 </div>
-            </form>
+            </form:form>
         </div>
     </div>
 </div>

@@ -85,9 +85,9 @@ public class App {
     }
 
     private void addRecipe() {
-        RecipeDto recipeToAdd = view.readRecipe();
+/*        RecipeDto recipeToAdd = view.readRecipe();
         service.addRecipe(recipeToAdd);
-        view.printRecipeNoDetail(recipeToAdd);
+        view.printRecipeNoDetail(recipeToAdd);*/
     }
 
     private void logout() {
