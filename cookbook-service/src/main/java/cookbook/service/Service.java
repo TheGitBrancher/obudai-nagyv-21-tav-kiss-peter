@@ -1,14 +1,12 @@
 package cookbook.service;
 
 import cookbook.domain.Category;
-import cookbook.domain.Unit;
 import cookbook.persistence.entity.*;
 import cookbook.persistence.repository.*;
 import cookbook.service.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-import cookbook.service.transformer.CookTransformer;
 import cookbook.service.transformer.RecipeTransformer;
 
 import javax.transaction.Transactional;
@@ -30,49 +28,7 @@ public class Service implements IService {
     private CookRepository cookRepository;
 
     @Autowired
-    private UserRepository userRepository;
-
-    private final RecipeTransformer recipeTransformer = new RecipeTransformer();
-    private final CookTransformer cookTransformer = new CookTransformer();
-
-    private CookDto currentlyLoggedIn;
-
-    @Override
-    @Transactional
-    public void login(String input) {
-
-/*        String[] splitted = input.split("-");
-        UserDto userDto = new UserDto();
-        userDto.setUsername(splitted[0]);
-        userDto.setPassword(splitted[1]);
-
-        if (authenticate(userDto)) {
-            List<Cook> cooks = cookRepository.findAll();
-            Cook toLogin = cooks.stream().filter(y-> y.getUsername().equals(userDto.getUsername())).findFirst().get();
-            toLogin.getComments().size();
-            toLogin.getOwnRecipes().size();
-            currentlyLoggedIn = cookTransformer.convertToCookDto(toLogin);
-        } else {
-            throw new NoSuchElementException();
-        }*/
-    }
-
-/*    public boolean authenticate(UserDto userDto) {
-        List<User> users = userRepository.findAll();
-        User userToLogin = users.stream().filter(y -> y.getUsername().equals(userDto.getUsername())).findFirst().get();
-
-        if (userToLogin.getUsername() != null) {
-            return userToLogin.getPassword().equals(userDto.getPassword());
-        }
-        else {
-            return false;
-        }
-    }*/
-
-    @Override
-    public void logout() {
-        currentlyLoggedIn = null;
-    }
+    private RecipeTransformer recipeTransformer;
 
     @Override
     public void addRecipe(RecipeDto recipeDto) {
@@ -81,8 +37,6 @@ public class Service implements IService {
 
         recipeRepository.save(recipeToAdd);
     }
-
-
 
     @Override
     @Transactional
@@ -98,16 +52,6 @@ public class Service implements IService {
 
         recipeToAddCommentTo.getComments().add(comment);
         commentRepository.save(comment);
-    }
-
-    @Override
-    public boolean isLoggedIn() {
-        return currentlyLoggedIn != null;
-    }
-
-    @Override
-    public List<RecipeDto> getRecipes() {
-        return null;
     }
 
     @Override
@@ -159,10 +103,10 @@ public class Service implements IService {
     @Transactional
     public RecipeDto getRecipeById(Long id) {
         List<Recipe> recipes = recipeRepository.findAll();
-
         return recipeTransformer.convertToRecipeDto(recipes.stream().filter(y -> y.getId().equals(id)).findFirst().get());
     }
 
+    @Override
     public List<RecipeDto> getMyRecipes() {
         List<Recipe> myRecipes = recipeRepository.findAll();
         List<RecipeDto> myRecipeDtos = new ArrayList<>();
@@ -172,7 +116,6 @@ public class Service implements IService {
                 myRecipeDtos.add(recipeTransformer.convertToRecipeDto(recipe));
             }
         }
-
         return myRecipeDtos;
     }
 
@@ -186,6 +129,7 @@ public class Service implements IService {
         return cooks.stream().filter(y -> y.getUsername().equals(getCurrentUsername())).findFirst().get();
     }
 
+    @Override
     public List<String> getCategories() {
         return Arrays.stream(Category.values()).map(Enum::toString).collect(Collectors.toList());
     }
@@ -194,10 +138,5 @@ public class Service implements IService {
     public void deleteRecipe(Long id) {
         Recipe recipeToDelete = recipeRepository.findById(id).get();
         recipeRepository.delete(recipeToDelete);
-    }
-
-    @Override
-    public UserDto getCurrentlyLoggedIn() {
-        return currentlyLoggedIn;
     }
 }

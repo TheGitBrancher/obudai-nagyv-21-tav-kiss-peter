@@ -17,18 +17,8 @@ public class SpringBootApp extends SpringBootServletInitializer {
         return application.sources(SpringBootApp.class);
     }
 
-    @Autowired
-    private App app;
-
     public static void main(String[] args) {
         SpringApplication.run(SpringBootApp.class, args);
     }
-
-/*
-    @Bean
-    public CommandLineRunner commandLineRunner() {
-        return args -> app.start();
-    }
-*/
 
 }
