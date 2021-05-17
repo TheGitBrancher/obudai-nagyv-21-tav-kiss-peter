@@ -1,7 +1,7 @@
 --Users
 insert into user (id, dtype, username, password) values
-    (1, 'Cook', 'gipszjakab', 'password'),
-    (2, 'Cook', 'palkata', '123456');
+    (1, 'Cook', 'gipszjakab', '$2a$12$aXhL/SbUJR7iyPaAqxgZd.hbfc1qVujsq0mF7sPYTxeRk3wrFQCb6'),
+    (2, 'Cook', 'palkata', '$2a$12$aXhL/SbUJR7iyPaAqxgZd.i4vYEzhaXQLYGxmSRArJH4lo7TaNzCe');
 
 create table authorities (
     username varchar(256) references user(username),

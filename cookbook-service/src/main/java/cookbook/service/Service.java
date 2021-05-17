@@ -4,6 +4,8 @@ import cookbook.persistence.entity.*;
 import cookbook.persistence.repository.*;
 import cookbook.service.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.support.SecurityContextProvider;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import cookbook.service.transformer.CookTransformer;
 import cookbook.service.transformer.RecipeTransformer;
@@ -29,14 +31,15 @@ public class Service implements IService {
     @Autowired
     private UserRepository userRepository;
 
-    RecipeTransformer recipeTransformer = new RecipeTransformer();
-    CookTransformer cookTransformer = new CookTransformer();
+    private final RecipeTransformer recipeTransformer = new RecipeTransformer();
+    private final CookTransformer cookTransformer = new CookTransformer();
 
     private CookDto currentlyLoggedIn;
 
     @Override
     @Transactional
     public void login(String input) {
+
         String[] splitted = input.split("-");
         UserDto userDto = new UserDto();
         userDto.setUsername(splitted[0]);
@@ -101,6 +104,7 @@ public class Service implements IService {
     @Override
     @Transactional
     public List<RecipeDto> getRecipes() {
+        System.out.println(SecurityContextHolder.getContext().getAuthentication().getName());
         List<Recipe> recipeList = (List<Recipe>)recipeRepository.findAll();
         recipeList.forEach(y -> y.getIngredients().size());
         recipeList.forEach(y -> y.getComments().size());
@@ -124,9 +128,8 @@ public class Service implements IService {
 
     @Override
     public Cook getCurrentUser() {
-        //List<Cook> cooks = (List<Cook>)cookRepository.findAll();
-        //return cooks.stream().filter(y -> y.getId().equals(getCurrentlyLoggedIn().getId())).findFirst().get();
-        return cookRepository.findAll().get(0);
+        List<Cook> cooks = (List<Cook>)cookRepository.findAll();
+        return cooks.stream().filter(y -> y.getId().equals(getCurrentlyLoggedIn().getId())).findFirst().get();
     }
 
     @Override
