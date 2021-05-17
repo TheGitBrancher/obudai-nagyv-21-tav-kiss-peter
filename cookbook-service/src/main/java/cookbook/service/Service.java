@@ -6,7 +6,6 @@ import cookbook.persistence.entity.*;
 import cookbook.persistence.repository.*;
 import cookbook.service.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.support.SecurityContextProvider;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import cookbook.service.transformer.CookTransformer;
@@ -15,6 +14,7 @@ import cookbook.service.transformer.RecipeTransformer;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
 
 @Component
@@ -75,32 +75,14 @@ public class Service implements IService {
     }
 
     @Override
-    public void addRecipe(AddRecipeDto addRecipeDto) {
-        Recipe recipeToAdd = new Recipe();
-        recipeToAdd.setName(addRecipeDto.getName());
-        recipeToAdd.setCategories(addRecipeDto.getCategories());
-        recipeToAdd.setPreparation(addRecipeDto.getPreparation());
+    public void addRecipe(RecipeDto recipeDto) {
+        Recipe recipeToAdd = recipeTransformer.convertDtoToRecipe(recipeDto);
         recipeToAdd.setUploader(getCurrentUser());
-        recipeToAdd.setServings(addRecipeDto.getServings());
-        recipeToAdd.setIngredients(ingredientFactory(addRecipeDto.getIngredients()));
 
         recipeRepository.save(recipeToAdd);
     }
 
-    private List<Ingredient> ingredientFactory(String ingredients) {
 
-        return Arrays.stream(ingredients.split(System.lineSeparator()))
-                .map(this::toIngredient).collect(Collectors.toList());
-    }
-
-    private Ingredient toIngredient(String line) {
-        Ingredient ingredientToAdd = new Ingredient();
-        String[] ingredientParts = line.split(" ");
-        ingredientToAdd.setAmount(Integer.parseInt(ingredientParts[0]));
-        ingredientToAdd.setUnit(Unit.valueOf(ingredientParts[1]));
-        ingredientToAdd.setName(ingredientParts[2]);
-        return ingredientToAdd;
-    }
 
     @Override
     @Transactional
@@ -124,28 +106,61 @@ public class Service implements IService {
     }
 
     @Override
-    @Transactional
     public List<RecipeDto> getRecipes() {
+        return null;
+    }
+
+    @Override
+    @Transactional
+    public List<RecipeDto> getRecipes(String search, List<String> filter) {
         List<Recipe> recipeList = recipeRepository.findAll();
         //FetchType.EAGER
         recipeList.forEach(y -> y.getIngredients().size());
         recipeList.forEach(y -> y.getComments().size());
         recipeList.forEach(y -> y.getCategories().size());
 
-        List<RecipeDto> recipeDtoList = new ArrayList<>();
+        List<RecipeDto> recipeDtos = recipeList.stream().map(recipeTransformer::convertToRecipeDto).collect(Collectors.toList());
+        if (search == null || search.isEmpty()) {
+            return recipeDtos;
+        }
+        BiPredicate<RecipeDto, String> filterPredicate = createPredicate(filter);
+        return recipeDtos.stream().filter(y -> filterPredicate.test(y, search)).collect(Collectors.toList());
+    }
 
-        for (Recipe recipe : recipeList) {
-            recipeDtoList.add(recipeTransformer.convertToRecipeDto(recipe));
+    private BiPredicate<RecipeDto, String> createPredicate(List<String> filter) {
+        if (filter.isEmpty()) {
+            return allPredicate;
         }
 
-        return recipeDtoList;
+        BiPredicate<RecipeDto, String> predicate = falsePredicate;
+
+        if (filter.contains("name")){
+            predicate = predicate.or(namePredicate);
+        }
+        if (filter.contains("category")){
+            predicate = predicate.or(categoryPredicate);
+        }
+        if (filter.contains("ingredient")){
+            predicate = predicate.or(ingredientPredicate);
+        }
+        if (filter.contains("uploader")){
+            predicate = predicate.or(uploaderPredicate);
+        }
+        return predicate;
     }
+
+    BiPredicate<RecipeDto, String> falsePredicate = (recipeDto, searchString) -> false;
+    BiPredicate<RecipeDto, String> namePredicate = (recipeDto, searchString) -> recipeDto.getName().contains(searchString);
+    BiPredicate<RecipeDto, String> categoryPredicate = (recipeDto, searchString) -> recipeDto.getCategories().stream().anyMatch(y -> y.toString().contains(searchString));
+    BiPredicate<RecipeDto, String> ingredientPredicate = (recipeDto, searchString) -> recipeDto.getIngredients().stream().anyMatch(y -> y.getName().contains(searchString));
+    BiPredicate<RecipeDto, String> uploaderPredicate = (recipeDto, searchString) -> recipeDto.getUploader().getUsername().contains(searchString);
+    BiPredicate<RecipeDto, String> allPredicate = (recipeDto, searchString) -> namePredicate.or(categoryPredicate).or(ingredientPredicate).or(uploaderPredicate).test(recipeDto, searchString);
 
     @Transactional
     public RecipeDto getRecipeById(Long id) {
-        List<RecipeDto> recipes = getRecipes();
+        List<Recipe> recipes = recipeRepository.findAll();
 
-        return recipes.stream().filter(y -> y.getId().equals(id)).findFirst().get();
+        return recipeTransformer.convertToRecipeDto(recipes.stream().filter(y -> y.getId().equals(id)).findFirst().get());
     }
 
     public List<RecipeDto> getMyRecipes() {

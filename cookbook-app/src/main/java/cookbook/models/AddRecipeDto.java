@@ -1,14 +1,32 @@
-package cookbook.service.dto;
+package cookbook.models;
 
 import cookbook.domain.Category;
+import cookbook.validators.IngredientConstraint;
+import org.hibernate.validator.constraints.Range;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 public class AddRecipeDto {
+
+    @IngredientConstraint
+    @NotEmpty(message = "Ingredient must not be empty")
     private String ingredients;
+
+    @NotEmpty(message = "Categories must not be empty")
     private List<Category> categories;
+
+    @NotEmpty(message = "Name must not be empty, nor longer than 255 chars.")
+    @Size(min = 0, max = 255)
     private String name;
+
+    @Positive(message = "Servings must be positive")
     private Integer servings;
+
+    @NotEmpty(message = "Preparation must not be empty, nor longer than 255 chars.")
+    @Size(min = 0, max = 255)
     private String preparation;
 
     public String getIngredients() {

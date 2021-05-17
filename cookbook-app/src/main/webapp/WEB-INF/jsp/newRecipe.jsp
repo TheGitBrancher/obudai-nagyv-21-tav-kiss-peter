@@ -11,11 +11,35 @@
 </head>
 <body>
 <jsp:include page="navbar.jsp" />
+<div class="container text-danger mt-3">
+    <form:form modelAttribute="addRecipeDto">
+        <div>
+            <form:errors path="name">
+            </form:errors>
+        </div>
+        <div>
+            <form:errors path="servings">
+            </form:errors>
+        </div>
+        <div>
+            <form:errors path="ingredients">
+            </form:errors>
+        </div>
+        <div>
+            <form:errors path="preparation">
+            </form:errors>
+        </div>
+        <div>
+            <form:errors path="categories">
+            </form:errors>
+        </div>
+    </form:form>
+</div>
 <div class="container mt-3">
     <div class="card">
         <h5 class="card-header bg-primary text-white">New Recipe</h5>
         <div class="card-body">
-            <form:form modelAttribute="addRecipeDto" class="row row-cols-lg-auto" method="post" action="/addRecipe">
+            <form class="row row-cols-lg-auto" method="post" action="/addRecipe">
                 <div class="input-group mb-3">
                     <div class="input-group-text">Name</div>
                     <input type="text" name="name" class="form-control">
@@ -43,7 +67,7 @@
                 <div>
                     <button type="submit" class="btn btn-primary">Save</button>
                 </div>
-            </form:form>
+            </form>
         </div>
     </div>
 </div>

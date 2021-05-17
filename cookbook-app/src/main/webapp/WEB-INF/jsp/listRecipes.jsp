@@ -11,6 +11,28 @@
 <body>
 <jsp:include page="navbar.jsp" />
 <div class="container mt-3">
+    <form action="/" method="get">
+        <label class="form-label" for="search">Search</label>
+        <input type="text" class="form-control" name="search" id="search">
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="name" value="name" name="filter">
+            <label class="form-check-label" for="name">name</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="category" value="category" name="filter">
+            <label class="form-check-label" for="category">category</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="ingredient" value="ingredient" name="filter">
+            <label class="form-check-label" for="ingredient">ingredient</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="uploader" value="uploader" name="filter">
+            <label class="form-check-label" for="uploader">uploader</label>
+        </div>
+    </form>
+</div>
+<div class="container mt-3">
     <div class="card">
         <h5 class="card-header bg-primary text-white">Recipes</h5>
         <div class="card-body">
